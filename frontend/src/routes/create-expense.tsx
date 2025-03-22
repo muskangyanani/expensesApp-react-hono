@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Button } from '../components/ui/button'
@@ -10,6 +10,7 @@ export const Route = createFileRoute('/create-expense')({
 })
 
 function CreateExpense() {
+  const navigate = useNavigate()
   const form = useForm({
     defaultValues: {
       title: '',
@@ -24,13 +25,13 @@ function CreateExpense() {
       if (!res.ok) {
         throw new Error('Failed to create expense')
       }
+      navigate({ to: '/expenses' })
     },
   })
 
   return (
     <div className="p-4 max-w-xl mx-auto">
       <h2 className="text-xl font-bold">Create Expense</h2>
-
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -41,7 +42,7 @@ function CreateExpense() {
         {/* Title Field */}
         <form.Field name="title">
           {(field) => (
-            <div>
+            <div className="mt-2 flex flex-col gap-2">
               <Label htmlFor={field.name}>Title</Label>
               <Input
                 type="text"
@@ -73,7 +74,7 @@ function CreateExpense() {
           }}
         >
           {(field) => (
-            <div>
+            <div className="mt-2 flex flex-col gap-2">
               <Label htmlFor={field.name}>Amount</Label>
               <Input
                 type="number"
