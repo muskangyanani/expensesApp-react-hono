@@ -3,6 +3,7 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Button } from '../components/ui/button'
 import { useForm } from '@tanstack/react-form'
+import { api } from '../lib/api'
 
 export const Route = createFileRoute('/create-expense')({
   component: CreateExpense,
@@ -16,7 +17,13 @@ function CreateExpense() {
     },
     onSubmit: async ({ value }) => {
       console.log('Form Data:', value)
-      // Handle form submission, e.g., send data to backend
+
+      const res = await api.expenses.$post({
+        json: { ...value, amount: Number(value.amount) },
+      })
+      if (!res.ok) {
+        throw new Error('Failed to create expense')
+      }
     },
   })
 
@@ -85,9 +92,15 @@ function CreateExpense() {
         </form.Field>
 
         {/* Submit Button */}
-        <Button type="submit" className="w-full">
-          Create Expense
-        </Button>
+
+        <form.Subscribe
+          selector={(state) => [state.canSubmit, state.isSubmitting]}
+          children={([canSubmit, isSubmitting]) => (
+            <Button type="submit" disabled={!canSubmit}>
+              {isSubmitting ? '...' : 'Submit'}
+            </Button>
+          )}
+        />
       </form>
     </div>
   )
