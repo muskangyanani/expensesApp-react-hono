@@ -2,30 +2,90 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Button } from '../components/ui/button'
+import { useForm } from '@tanstack/react-form'
 
 export const Route = createFileRoute('/create-expense')({
   component: CreateExpense,
 })
 
 function CreateExpense() {
+  const form = useForm({
+    defaultValues: {
+      title: '',
+      amount: '',
+    },
+    onSubmit: async ({ value }) => {
+      console.log('Form Data:', value)
+      // Handle form submission, e.g., send data to backend
+    },
+  })
+
   return (
-    <div className="p-2 ">
-      <h2>Create Expense</h2>
-      <form action="" className="max-w-xl m-auto">
-        <Label className="mt-2" htmlFor="title">
-          Title
-        </Label>
-        <Input className="mt-2" type="text" id="title" placeholder="title" />
-        <Label className="mt-2" htmlFor="amount">
-          amount
-        </Label>
-        <Input
-          className="mt-2"
-          type="number"
-          id="amount"
-          placeholder="amount"
-        />
-        <Button className="mt-4" type="submit">
+    <div className="p-4 max-w-xl mx-auto">
+      <h2 className="text-xl font-bold">Create Expense</h2>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          form.handleSubmit()
+        }}
+        className="space-y-4"
+      >
+        {/* Title Field */}
+        <form.Field name="title">
+          {(field) => (
+            <div>
+              <Label htmlFor={field.name}>Title</Label>
+              <Input
+                type="text"
+                id={field.name}
+                placeholder="Enter title"
+                value={field.state.value}
+                onChange={(e) => field.setValue(e.target.value)}
+              />
+              {field.state.meta.errors && (
+                <p className="text-red-500 text-sm">
+                  {field.state.meta.errors}
+                </p>
+              )}
+            </div>
+          )}
+        </form.Field>
+
+        {/* Amount Field */}
+        <form.Field
+          name="amount"
+          validators={{
+            onChange: ({ value }) => {
+              const numValue = Number(value)
+
+              return !numValue || isNaN(numValue) || numValue <= 0
+                ? 'Amount must be a positive number'
+                : undefined
+            },
+          }}
+        >
+          {(field) => (
+            <div>
+              <Label htmlFor={field.name}>Amount</Label>
+              <Input
+                type="number"
+                id={field.name}
+                placeholder="Enter amount"
+                value={field.state.value}
+                onChange={(e) => field.setValue(e.target.value)}
+              />
+              {field.state.meta.errors && (
+                <p className="text-red-500 text-sm">
+                  {field.state.meta.errors}
+                </p>
+              )}
+            </div>
+          )}
+        </form.Field>
+
+        {/* Submit Button */}
+        <Button type="submit" className="w-full">
           Create Expense
         </Button>
       </form>
