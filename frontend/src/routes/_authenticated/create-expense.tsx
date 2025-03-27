@@ -30,7 +30,7 @@ function CreateExpense() {
   })
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
+    <div className="p-4 w-2xl mx-auto">
       <h2 className="text-xl font-bold">Create Expense</h2>
       <form
         onSubmit={(e) => {

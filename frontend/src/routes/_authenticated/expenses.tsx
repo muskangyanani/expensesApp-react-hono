@@ -34,7 +34,7 @@ function Expenses() {
 
   if (error) return 'An error has occurred: ' + error.message
   return (
-    <div className="p-2 max-w-3xl m-auto">
+    <div className="p-2 w-2xl m-auto">
       <Table>
         <TableCaption>A list of your recent expenses.</TableCaption>
         <TableHeader>

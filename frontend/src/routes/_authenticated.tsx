@@ -5,7 +5,10 @@ const Login = () => {
   return (
     <div>
       You have to
-      <a href="/api/login"> Login!</a>
+      <a href="/api/login" className="text-blue-500">
+        {' '}
+        Login!
+      </a>
     </div>
   )
 }

@@ -15,7 +15,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function Navbar() {
   return (
-    <div className="p-2 flex gap-2">
+    <div className="p-2 flex gap-2 max-w-4xl mx-auto">
       <Link to="/" className="[&.active]:font-bold">
         Home
       </Link>{' '}
@@ -40,7 +40,9 @@ function Root() {
     <>
       <Navbar />
       <hr />
-      <Outlet />
+      <div className="p-2 flex gap-2 max-w-4xl mx-auto">
+        <Outlet />
+      </div>
     </>
   )
 }
