@@ -6,15 +6,15 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '../components/ui/card'
+} from '../../components/ui/card'
 
 // exporting route using tanstack router
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_authenticated/')({
   component: Index,
 })
 import { useQuery } from '@tanstack/react-query'
 
-import { api } from '../lib/api'
+import { api } from '../../lib/api'
 
 async function getTotalSpent() {
   const res = await api.expenses['total-spent'].$get()

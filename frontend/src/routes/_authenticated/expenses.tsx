@@ -6,13 +6,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../components/ui/table'
-import { Skeleton } from '../components/ui/skeleton'
+} from '../../components/ui/table'
+import { Skeleton } from '../../components/ui/skeleton'
 import { createFileRoute } from '@tanstack/react-router'
-import { api } from '../lib/api'
+import { api } from '../../lib/api'
 import { useQuery } from '@tanstack/react-query'
 // from tanstack router
-export const Route = createFileRoute('/expenses')({
+export const Route = createFileRoute('/_authenticated/expenses')({
   component: Expenses,
 })
 
