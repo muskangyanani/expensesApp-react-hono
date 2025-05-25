@@ -20,7 +20,7 @@ function CreateExpense() {
       console.log('Form Data:', value)
 
       const res = await api.expenses.$post({
-        json: { ...value, amount: Number(value.amount) },
+        json: { ...value, amount: value.amount },
       })
       if (!res.ok) {
         throw new Error('Failed to create expense')
